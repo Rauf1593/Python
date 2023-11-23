@@ -1,0 +1,17 @@
+eded = input("Eded:") 
+uzun= len(eded)
+eded=int(eded)
+toplam=0
+
+evez=eded
+
+while evez>0:
+    mertebe= evez%10
+    toplam+= mertebe **uzun
+    evez//=10
+    
+
+if eded==toplam:
+    print("Apollondur.")
+else:
+    print("Deyildir.")
