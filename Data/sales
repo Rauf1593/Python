@@ -1,0 +1,35 @@
+import numpy as np
+import pandas as pd
+
+df= pd.read_csv(r"C:\Users\Hp\Downloads\train.csv" )
+df
+
+df.describe()
+
+df.columns
+
+df2=df.drop(["Row ID","Order ID","Customer ID","Product ID"], axis=1)
+df2
+
+df2.isnull().sum()
+
+df2[df2["Postal Code"].isnull()]
+
+df2["Postal Code"]= df2["Postal Code"].fillna(5402)
+df2
+
+df2.isnull().sum()
+
+df2["Months"]= df2["Order Date"].str[3:5]
+df2["Months"]= df2["Months"].astype("int32")
+df2
+
+d= {1 : "January", 2 : "February", 3: "March", 4 : "April",5:"May",6:"June",7:"Jule",8:"August",9:"September",10:"October",11:"November",12:"December"}
+df2["Months"]= [d[i] for i in df2["Months"]]
+
+df2
+
+df_months=df2.groupby("Months").sum(["Sales"])
+df_months=df_months["Sales"]
+
+df_months
