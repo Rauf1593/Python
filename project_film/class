@@ -1,0 +1,74 @@
+import psycopg2 as ps 
+from psycopg2 import sql
+
+class Film():
+    def __init__(self,yonetmen,ad,il,janr):
+        self.yonetmen = yonetmen
+        self.ad = ad
+        self.il = il
+        self.janr = janr
+    
+    def __str__(self): 
+        return "Rejissor: {}\nFilm: {}\nIl: {}\nJanr: {}".format(self.yonetmen,self.ad,self.il,self.janr)
+    
+
+class Platform():
+    def __init__(self):
+        self.baglanti()
+    
+    def baglanti(self):
+        self.conn = ps.connect(host="", database="",user="",password="",port=) #yaz doldur
+        self.cur = self.conn.cursor()
+    
+    def baglanti_kes(self):
+        
+        self.conn.close()
+
+    def filmler(self):
+        
+        sorgu = "SELECT * FROM films"
+
+        self.cur.execute(sorgu)
+
+        filmlerim = self.cur.fetchall()
+
+        if (len(filmlerim) == 0):
+            print("Hec bir film yoxur.")
+        else:
+            for i in filmlerim:
+                film = (i[0],i[1],i[2],i[3])
+                print(film)
+    
+    def film_axtar(self,isim):
+
+        sorgu = "SELECT * FROM films WHERE adi = %s"
+        self.cur.execute(sorgu,(isim,))
+
+        filmlerim = self.cur.fetchall()
+
+        if (len(filmlerim) == 0):
+            print("Hec bir film yoxur.")
+        else:
+            
+            film1 = Film(filmlerim[0][0],filmlerim[0][1],filmlerim[0][2],filmlerim[0][3])
+            print(film1)
+    
+    def film_elave(self,film):
+
+        sorgu = "INSERT INTO films VALUES(%s,%s,%s,%s)"
+        
+        self.cur.execute(sorgu,(film.yonetmen,film.ad,film.il,film.janr))
+
+        self.conn.commit()
+
+    def film_sil(self,isim):
+
+        sorgu = "DELETE FROM films WHERE adi = %s"
+        self.cur.execute(sorgu,(isim,))
+       
+        self.conn.commit()
+
+
+
+
+
