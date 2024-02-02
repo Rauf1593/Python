@@ -1,0 +1,44 @@
+from yoxlat import *
+
+print("""
+_________________________________
+    Film Axtara Xos Gelmisiniz...
+        1. Filmlere bax.
+        2. Film axtar.
+        3. Film elave et.
+        4. Film sil.
+        5. Programi baglamaq ucun 'q' girin.
+_________________________________""")
+
+platform = Platform()
+
+while True:
+    islem = input("Emeliyyati seciniz: ")
+
+    if islem.lower() == "q":
+        print("Program sonlandirilir....")
+        break
+    elif islem == "1":
+        platform.baglanti()
+        platform.filmler()
+    elif islem == "2":
+        isim = input("Hansi filmi axtarirsiniz? ")
+        platform.film_axtar(isim)
+    elif islem == "3":
+        yonetmen = input("Rejissor: ")
+        ad = input("Filmin adi: ")
+        ili = input("Filmin ili: ")
+        janr = input("Janr: ")
+
+        yeni_film = Film(yonetmen, ad, ili, janr)
+
+        platform.film_elave(yeni_film)
+    elif islem == "4":
+        isim = input("Hansi filmi silmek isteyirsiz? ")
+
+        tesdiq = input("H/Y: ")
+
+        if tesdiq.upper() == "H":
+            platform.film_sil(isim)
+    else:
+        print("Bele bir emeliyyat yoxdur...")
